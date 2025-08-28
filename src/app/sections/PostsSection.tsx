@@ -14,7 +14,7 @@ const PostsSection = async () => {
         <div>
           {posts.map((post) => (
             <div key={post.id} className="">
-              <Link href={post.link}>
+              <Link href={`/${post.slug}`}>
                 <dl className="flex">
                   <dt>{format(new Date(post.date), "yyyy/MM/dd")}</dt>
                   <dd className="ml-10">{post.title.rendered}</dd>
