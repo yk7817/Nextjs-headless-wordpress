@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { format } from "date-fns";
 import { POST_LIST_ENDPOINT } from "../lib/wordpress/posts";
 import { PostType } from "../lib/wordpress/types";
 
@@ -29,9 +30,19 @@ const PostPage = async ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <article>
-      <div>
-        <h1>{post.title.rendered}</h1>
+    <article className="post_container">
+      <div className="post_inner w-4/5 m-auto py-20">
+        <div className="post_title my-5 flex justify-baseline items-end">
+          <h2 className="text-3xl">{post.title.rendered}</h2>
+          <small className="post_date ml-5">
+            {format(new Date(post.date), "yyyy/MM/dd")}
+          </small>
+        </div>
+        {/* 投稿本文をAPIから取得する場合、文の前後に余計なタグが付いてくる為タグをレンダリングするメソッドで記述 */}
+        <div
+          className="post_body"
+          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+        />
       </div>
     </article>
   );
